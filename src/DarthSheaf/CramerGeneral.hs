@@ -1,16 +1,15 @@
 {-# LANGUAGE BangPatterns #-}
 
-module CramerGeneral where
+module DarthSheaf.CramerGeneral where
 
 import Data.List (permutations)
-import qualified Data.Map.Strict as M
 
 type Matrix = [[Double]]
 type Vector = [Double]
 
 -- Count inversions in a permutation
 inversions :: [Int] -> Int
-inversions xs = length [(i,j) | (i,xi) <- zip [0..] xs, (j,xj) <- zip [0..] xs, i < j, xi > xj]
+inversions xs = length [(i,j) | (i,xi) <- zip [0 :: Int ..] xs, (j,xj) <- zip [0 :: Int ..] xs, i < j, xi > xj]
 
 -- Sign of permutation
 permSign :: [Int] -> Double

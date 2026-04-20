@@ -4,30 +4,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-**Load in GHCi (interactive REPL):**
 ```
-ghci CramerGeneral.hs
-```
-
-**Compile with GHC:**
-```
-ghc CramerGeneral.hs
+cabal build          # build the library
+cabal test           # run the test suite
+cabal repl           # open GHCi with the library loaded
+cabal repl test:dartsheaf-test   # open GHCi in test context
+hlint src/           # lint (if hlint is installed)
 ```
 
-**Lint (if hlint is available):**
-```
-hlint CramerGeneral.hs
-```
-
-No build system (cabal/stack) is configured. The project is a single standalone module.
+To run a single test file directly: `cabal test --test-show-details=streaming`.
 
 ## Architecture
 
-`CramerGeneral.hs` is a single Haskell module implementing **Cramer's Rule** for solving systems of linear equations `Ax = b`.
+DarthSheaf is an extensible Haskell linear algebra library. The public API is re-exported through `src/DarthSheaf.hs`; each algorithm lives in its own module under `src/DarthSheaf/`.
 
-- `det` computes the determinant by summing over all `n!` permutations — this is O(n! · n) and not intended for large matrices.
-- `cramer` is the primary API: returns `Nothing` when `det(A) = 0` (singular), otherwise `Just` the solution vector.
-- `replaceCol` is a helper used internally by `cramer` to construct the modified matrices `A_j`.
-- `BangPatterns` is enabled for strict evaluation on accumulator patterns.
+**Current modules:**
+- `DarthSheaf.CramerGeneral` — Cramer's Rule solver for n×n systems (`cramer :: Matrix -> Vector -> Maybe Vector`). Uses a permutation-sum determinant (O(n!·n)) — correct but only practical for small n.
 
-The `permutations` function from `Data.List` generates all permutations of column indices; `Data.Map.Strict` is imported but currently unused.
+**Adding a new algorithm:**
+1. Create `src/DarthSheaf/YourModule.hs` with `module DarthSheaf.YourModule where`.
+2. Add it to `exposed-modules` in `DarthSheaf.cabal`.
+3. Re-export it from `src/DarthSheaf.hs`.
+4. Add tests in `test/Main.hs`.
+
+**Types** (`Matrix = [[Double]]`, `Vector = [Double]`) are defined in `DarthSheaf.CramerGeneral` and shared across modules.
