@@ -1,9 +1,10 @@
 cabal-version:      3.0
 name:               DarthSheaf
 version:            0.1.0.0
-synopsis:           Extensible one-stop shop for linear algebra tasks
-description:        A growing Haskell library for linear algebra: solving systems,
-                    decompositions, and more.
+synopsis:           BLAS Level 1 operations in pure Haskell
+description:        A pedagogical implementation of BLAS Level 1 (vector-vector)
+                    operations in pure Haskell, focusing on correctness, numerical
+                    stability, and clarity.
 license:            MIT
 license-file:       LICENSE
 author:             darthcoder
@@ -15,13 +16,12 @@ extra-doc-files:    CHANGELOG.md
 library
     exposed-modules:
         DarthSheaf
-        DarthSheaf.CramerGeneral
+        DarthSheaf.BlasL1
     hs-source-dirs:   src
     default-language: Haskell2010
     ghc-options:      -Wall
     build-depends:
-        base >=4.14 && <5,
-        containers
+        base >=4.14 && <5
 
 test-suite dartsheaf-test
     type:             exitcode-stdio-1.0
@@ -32,4 +32,16 @@ test-suite dartsheaf-test
     build-depends:
         base >=4.14 && <5,
         DarthSheaf,
-        hspec
+        hspec,
+        QuickCheck
+
+benchmark dartsheaf-bench
+    type:             exitcode-stdio-1.0
+    main-is:          Main.hs
+    hs-source-dirs:   bench
+    default-language: Haskell2010
+    ghc-options:      -Wall -O2
+    build-depends:
+        base >=4.14 && <5,
+        DarthSheaf,
+        criterion

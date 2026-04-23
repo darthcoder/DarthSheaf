@@ -1,5 +1,5 @@
 module DarthSheaf
-    ( module DarthSheaf.CramerGeneral
+    ( module DarthSheaf.BlasL1
     ) where
 
-import DarthSheaf.CramerGeneral
+import DarthSheaf.BlasL1
