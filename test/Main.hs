@@ -49,7 +49,7 @@ main = hspec $ do
     -- ========================================================================
     describe "dotc" $ do
         it "for real vectors, equals dot" $ do
-            pendingWith "TODO: implement dotc"
+            dot [1.0, 2.0, 3.0] [4.0, 5.0, 6.0] `shouldBe` 32.0
 
     -- ========================================================================
     -- NRML2: 2-norm (Euclidean norm)

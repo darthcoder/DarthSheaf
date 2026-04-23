@@ -62,7 +62,7 @@ Numerical hazard: None (single multiplication per element).
 Learning focus: Loop structure, indexing, performance baseline.
 -}
 scal :: Double -> Vector -> Vector
-scal c [] = []
+scal _ [] = []
 -- scal c [a] = c*[a]
 scal c (x:xs) = c*x: scal c xs
 
@@ -131,7 +131,7 @@ Numerical hazard: Same as 'dot'.
 Learning focus: Understanding why complex variants exist and why they matter.
 -}
 dotc :: Vector -> Vector -> Double
-dotc = undefined
+dotc = dot
 
 -- ============================================================================
 -- NRML2: Euclidean norm (2-norm)
