@@ -1,0 +1,71 @@
+Build profile: -w ghc-9.14.1 -O1
+In order, the following will be built (use -v for more details):
+ - DarthSheaf-0.1.0.0 (bench:dartsheaf-bench) (first run)
+Preprocessing benchmark 'dartsheaf-bench' for DarthSheaf-0.1.0.0...
+Building benchmark 'dartsheaf-bench' for DarthSheaf-0.1.0.0...
+Running 1 benchmarks...
+Benchmark dartsheaf-bench: RUNNING...
+benchmarking SCAL/small (10)
+time                 799.9 ns   (589.8 ns .. 1.065 μs)
+                     0.689 R²   (0.622 R² .. 0.831 R²)
+mean                 880.0 ns   (768.5 ns .. 1.006 μs)
+std dev              428.4 ns   (340.1 ns .. 544.8 ns)
+variance introduced by outliers: 100% (severely inflated)
+
+benchmarking SCAL/medium (100)
+time                 11.23 μs   (8.973 μs .. 14.26 μs)
+                     0.670 R²   (0.568 R² .. 0.818 R²)
+mean                 15.65 μs   (12.94 μs .. 19.14 μs)
+std dev              10.64 μs   (7.494 μs .. 13.96 μs)
+variance introduced by outliers: 99% (severely inflated)
+
+benchmarking SCAL/large (1000)
+time                 115.4 μs   (67.35 μs .. 181.7 μs)
+                     0.043 R²   (0.009 R² .. 0.350 R²)
+mean                 715.2 μs   (379.9 μs .. 1.442 ms)
+std dev              1.386 ms   (556.4 μs .. 2.333 ms)
+variance introduced by outliers: 99% (severely inflated)
+
+benchmarking AXPY/small (10)
+time                 2.269 μs   (1.802 μs .. 3.059 μs)
+                     0.331 R²   (0.212 R² .. 0.592 R²)
+mean                 6.373 μs   (3.804 μs .. 12.84 μs)
+std dev              10.85 μs   (4.575 μs .. 19.55 μs)
+variance introduced by outliers: 99% (severely inflated)
+
+benchmarking AXPY/medium (100)
+time                 25.79 μs   (20.24 μs .. 33.07 μs)
+                     0.562 R²   (0.425 R² .. 0.726 R²)
+mean                 51.50 μs   (36.01 μs .. 88.25 μs)
+std dev              72.77 μs   (42.18 μs .. 131.3 μs)
+variance introduced by outliers: 99% (severely inflated)
+
+benchmarking AXPY/large (1000)
+time                 125.4 μs   (97.49 μs .. 162.3 μs)
+                     0.399 R²   (0.244 R² .. 0.746 R²)
+mean                 243.2 μs   (186.4 μs .. 328.9 μs)
+std dev              222.4 μs   (149.9 μs .. 372.2 μs)
+variance introduced by outliers: 99% (severely inflated)
+
+benchmarking DOT/small (10)
+time                 494.2 ns   (304.8 ns .. 707.6 ns)
+                     0.478 R²   (0.327 R² .. 0.740 R²)
+mean                 452.4 ns   (323.3 ns .. 726.5 ns)
+std dev              516.9 ns   (265.6 ns .. 908.4 ns)
+variance introduced by outliers: 100% (severely inflated)
+
+benchmarking DOT/medium (100)
+time                 1.173 μs   (1.039 μs .. 1.398 μs)
+                     0.551 R²   (0.418 R² .. 0.761 R²)
+mean                 4.149 μs   (2.670 μs .. 7.136 μs)
+std dev              7.210 μs   (3.953 μs .. 11.77 μs)
+variance introduced by outliers: 99% (severely inflated)
+
+benchmarking DOT/large (1000)
+time                 11.44 μs   (9.580 μs .. 13.39 μs)
+                     0.746 R²   (0.569 R² .. 0.885 R²)
+mean                 25.23 μs   (16.63 μs .. 47.50 μs)
+std dev              43.74 μs   (21.93 μs .. 82.42 μs)
+variance introduced by outliers: 99% (severely inflated)
+
+Benchmark dartsheaf-bench: FINISH
