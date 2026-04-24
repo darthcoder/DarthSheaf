@@ -183,8 +183,8 @@ Learning focus: Conditional logic (sign handling), alternative to NRML2,
 simpler accumulation strategy.
 -}
 asum :: Vector -> Double
-asum = foldr (+) []
-
+asum [] = 0
+asum (x:xs) =  abs x + asum xs
 -- ============================================================================
 -- IAMAX: Index of maximum absolute value
 -- ============================================================================

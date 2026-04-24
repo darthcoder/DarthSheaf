@@ -69,14 +69,12 @@ main = hspec $ do
     -- ========================================================================
     describe "asum" $ do
         it "sums absolute values" $ do
-            pendingWith "TODO: implement asum"
-
+            asum [1.0, -1.0, 1.0]  `shouldBe` 3.0
         it "asum of zeros is zero" $ do
-            pendingWith "TODO: implement asum"
+            asum [0.0, -0.0, 0.0]  `shouldBe` 0.0
 
         it "asum is non-negative" $ do
-            pendingWith "TODO: implement asum"
-
+            asum  [0.0, 0.0, -1.0] `shouldBe` 1.0
     -- ========================================================================
     -- IAMAX: Index of maximum absolute value
     -- ========================================================================
