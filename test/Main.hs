@@ -80,14 +80,12 @@ main = hspec $ do
     -- ========================================================================
     describe "iamax" $ do
         it "finds index of max absolute value" $ do
-            pendingWith "TODO: implement iamax"
+            iamax [1,2,3] `shouldBe` Just 2
 
         it "returns Nothing for empty vector" $ do
-            pendingWith "TODO: implement iamax"
-
+            iamax [] `shouldBe` Nothing
         it "finds first max if duplicates" $ do
-            pendingWith "TODO: implement iamax"
-
+            iamax [3, 3, 1] `shouldBe` Just 1
     -- ========================================================================
     -- COPY: Copy vector
     -- ========================================================================
