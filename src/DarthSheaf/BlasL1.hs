@@ -119,7 +119,10 @@ Kahan summation as a mitigation.
 EXAMPLE IMPLEMENTATION (this one is done for you to see the pattern):
 -}
 dot :: Vector -> Vector -> Double
-dot x y = sum (zipWith (*) x y)
+-- dot x y = sum (zipWith (*) x y)
+dot [][] = 0
+dot (x:xs) (y:ys) = x*y + dot (xs)(ys)
+dot _ _ = 0
 
 -- ============================================================================
 -- DOTC: Conjugate dot product

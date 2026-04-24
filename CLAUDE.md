@@ -32,6 +32,11 @@ To run tests with detailed output:
 cabal test --test-show-details=streaming
 ```
 
+To explore tests interactively:
+```bash
+cabal repl test:darthsheaf-test
+```
+
 ---
 
 ## Current State
@@ -39,8 +44,8 @@ cabal test --test-show-details=streaming
 **See `PROGRESS.md` for the canonical status tracker.** It logs completed ops, test results, and learning insights per operation.
 
 Quick snapshot:
-- **Implemented:** SCAL, AXPY, DOT, DOTC, IAMAX (with tests)
-- **Pending:** ASUM, NRML2, COPY, SWAP, ROT, ROTMG (stubs with docstrings)
+- **Implemented:** SCAL, AXPY, DOT, DOTC, IAMAX, ASUM (with tests)
+- **Pending:** NRML2, COPY, SWAP, ROT, ROTMG (stubs with docstrings)
 - `test/Main.hs` — Tests written for implemented ops; stubs for pending
 - `bench/Main.hs` — Benchmark structure ready to fill in
 - `tries.hs` — Scratchpad for learning patterns (in .gitignore)
@@ -53,7 +58,7 @@ Quick snapshot:
 - Full type signature
 - Comprehensive docstring explaining purpose and numerical hazards
 - Learning focus (what concept it teaches)
-- Implemented ops (SCAL, AXPY, DOT, DOTC) as reference examples
+- Implemented ops (SCAL, AXPY, DOT, DOTC, IAMAX, ASUM) as reference examples
 
 **Extensions:** `src/DarthSheaf/CramerGeneral.hs` — Determinants and Cramer's rule (uses BLAS ops as building blocks). Demonstrates how the ops compose into higher-level algorithms.
 
@@ -70,7 +75,7 @@ Quick snapshot:
 | ✓ | **DOT** | `dot :: Vector -> Vector -> Double` | Dot product: `Σ(x_i · y_i)` | Accumulation, numerical stability |
 | ✓ | **DOTC** | `dotc :: Vector -> Vector -> Double` | Dot product (conjugate, for C) | Stability with complex numbers |
 | ✓ | **IAMAX** | `iamax :: Vector -> Maybe Int` | Index of max absolute value | Search operations, index tracking |
-| ⋯ | **ASUM** | `asum :: Vector -> Double` | Sum of absolute values: `Σ\|x_i\|` | Simpler accumulation |
+| ✓ | **ASUM** | `asum :: Vector -> Double` | Sum of absolute values: `Σ\|x_i\|` | Simpler accumulation |
 | ⋯ | **NRML2** | `nrml2 :: Vector -> Double` | 2-norm: `sqrt(Σ x_i²)` | Overflow/underflow handling |
 | ⋯ | **COPY** | `copy :: Vector -> Vector` | Copy vector | Memory bandwidth baseline |
 | ⋯ | **SWAP** | `swap :: Vector -> Vector -> (Vector, Vector)` | Swap two vectors in-place (Haskell: returns pair) | Memory aliasing, immutability |
