@@ -192,8 +192,12 @@ Learning focus: Search operations, finding extrema, handling empty inputs,
 comparison-based algorithms, early termination strategies.
 -}
 iamax :: Vector -> Maybe Int
-iamax = undefined
-
+iamax [] = Nothing
+iamax [_] = Just 0
+iamax (x:xs) =
+    case iamax xs of
+        Nothing -> Nothing
+        Just index -> if (abs x  > abs (xs!!index)) then Just 0 else Just (index+1)
 -- ============================================================================
 -- COPY: Copy vector
 -- ============================================================================

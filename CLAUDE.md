@@ -4,10 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Teaching Methodology
 
-This project uses the **sensei-halp** approach defined in `SKILL.md`. Read that file before interacting. Key constraints:
+This project uses the **sensei-halp** approach defined in `SKILL.md`. **Read SKILL.md first.** Key constraints:
 
 1. **Three-phase learning:** Each concept goes Pseudocode (chat) → Python (.py file) → Haskell (.hs file). Do not skip phases.
-2. **Idiom-locking:** Once Phase 2 begins, learning style is locked (recursion-only or comprehension-only). Student picks one path and walks it through all three phases.
+2. **Idiom-locking:** Once Phase 2 begins, learning style is locked (recursion-only or comprehension-only). Student picks one path and walks it through all three phases. **Current idiom: recursion-only** (no list comprehensions or higher-order abstractions yet).
 3. **No code generation:** Guide by constraint and analogy, never by writing implementations. When asked to write code, offer a smaller problem instead.
 4. **Lazy-proofing:** If student skips a phase or pastes external code, drag them back to understanding first with smaller examples.
 
@@ -36,19 +36,25 @@ cabal test --test-show-details=streaming
 
 ## Current State
 
-- `src/DarthSheaf/BlasL1.hs` — All 10 operations have full type signatures and documentation. **DOT is implemented as an example;** the rest are stubs (`undefined`). Student implements each.
-- `test/Main.hs` — Test scaffolds for all operations. **DOT tests are written;** others are pending stubs.
-- `bench/Main.hs` — Benchmark structure ready to fill in.
+**See `PROGRESS.md` for the canonical status tracker.** It logs completed ops, test results, and learning insights per operation.
+
+Quick snapshot:
+- **Implemented:** SCAL, AXPY, DOT, DOTC (with tests)
+- **Pending:** NRML2, ASUM, IAMAX, COPY, SWAP, ROT, ROTMG (stubs with docstrings)
+- `test/Main.hs` — Tests written for implemented ops; stubs for pending
+- `bench/Main.hs` — Benchmark structure ready to fill in
 
 ## Architecture
 
 **Public API:** `src/DarthSheaf.hs` re-exports all operations.
 
-**Implementation:** Each BLAS Level 1 operation lives in `src/DarthSheaf/BlasL1.hs`. Each operation has:
+**Core operations:** `src/DarthSheaf/BlasL1.hs` — All 10 BLAS Level 1 ops, each with:
 - Full type signature
-- Comprehensive docstring explaining what it does and numerical hazards
+- Comprehensive docstring explaining purpose and numerical hazards
 - Learning focus (what concept it teaches)
-- DOT implementation as a reference example
+- Implemented ops (SCAL, AXPY, DOT, DOTC) as reference examples
+
+**Extensions:** `src/DarthSheaf/CramerGeneral.hs` — Determinants and Cramer's rule (uses BLAS ops as building blocks). Demonstrates how the ops compose into higher-level algorithms.
 
 **Types:**
 - `Vector = [Double]` — dense vector
@@ -56,19 +62,19 @@ cabal test --test-show-details=streaming
 
 **Operations (in learning order):**
 
-| Op | Signature | What It Does | Learning Focus |
-|---|---|---|---|
-| **SCAL** | `scal :: Double -> Vector -> Vector` | Scale: `y := α·x` | Loop structure, baseline performance |
-| **AXPY** | `axpy :: Double -> Vector -> Vector -> Vector` | Add scaled: `y := α·x + y` | Memory access patterns, vectorization |
-| **DOT** | `dot :: Vector -> Vector -> Double` | Dot product: `Σ(x_i · y_i)` | Accumulation, numerical stability |
-| **DOTC** | `dotc :: Vector -> Vector -> Double` | Dot product (conjugate, for C) | Stability with complex numbers |
-| **NRML2** | `nrml2 :: Vector -> Double` | 2-norm: `sqrt(Σ x_i²)` | Overflow/underflow handling |
-| **ASUM** | `asum :: Vector -> Double` | Sum of absolute values: `Σ\|x_i\|` | Simpler accumulation |
-| **IAMAX** | `iamax :: Vector -> Maybe Int` | Index of max absolute value | Search operations, comparisons |
-| **COPY** | `copy :: Vector -> Vector` | Copy vector | Memory bandwidth baseline |
-| **SWAP** | `swap :: Vector -> Vector -> (Vector, Vector)` | Swap two vectors in-place (Haskell: returns pair) | Memory aliasing, immutability |
-| **ROT** | `rot :: Double -> Double -> Vector -> Vector -> (Vector, Vector)` | Givens rotation | Parametric transformations |
-| **ROTMG** | `rotmg :: Double -> Double -> Double -> Double -> (Double, Double, Double, Double)` | Generate Givens parameters | Numerical robustness edge cases |
+| Status | Op | Signature | What It Does | Learning Focus |
+|---|---|---|---|---|
+| ✓ | **SCAL** | `scal :: Double -> Vector -> Vector` | Scale: `y := α·x` | Loop structure, baseline performance |
+| ✓ | **AXPY** | `axpy :: Double -> Vector -> Vector -> Vector` | Add scaled: `y := α·x + y` | Memory access patterns, vectorization |
+| ✓ | **DOT** | `dot :: Vector -> Vector -> Double` | Dot product: `Σ(x_i · y_i)` | Accumulation, numerical stability |
+| ✓ | **DOTC** | `dotc :: Vector -> Vector -> Double` | Dot product (conjugate, for C) | Stability with complex numbers |
+| ⋯ | **NRML2** | `nrml2 :: Vector -> Double` | 2-norm: `sqrt(Σ x_i²)` | Overflow/underflow handling |
+| ⋯ | **ASUM** | `asum :: Vector -> Double` | Sum of absolute values: `Σ\|x_i\|` | Simpler accumulation |
+| ⋯ | **IAMAX** | `iamax :: Vector -> Maybe Int` | Index of max absolute value | Search operations, comparisons |
+| ⋯ | **COPY** | `copy :: Vector -> Vector` | Copy vector | Memory bandwidth baseline |
+| ⋯ | **SWAP** | `swap :: Vector -> Vector -> (Vector, Vector)` | Swap two vectors in-place (Haskell: returns pair) | Memory aliasing, immutability |
+| ⋯ | **ROT** | `rot :: Double -> Double -> Vector -> Vector -> (Vector, Vector)` | Givens rotation | Parametric transformations |
+| ⋯ | **ROTMG** | `rotmg :: Double -> Double -> Double -> Double -> (Double, Double, Double, Double)` | Generate Givens parameters | Numerical robustness edge cases |
 
 ---
 
@@ -103,7 +109,7 @@ When the student asks for help implementing an operation:
 
 1. **Refuse to write implementations.** If asked to write code, offer a smaller problem instead. The student builds skill by doing, not reading.
 2. **Reference docstrings.** Each operation in `BlasL1.hs` has full explanation, numerical hazards, and learning focus. These are your guides.
-3. **Use DOT as a reference.** It's the only implemented operation; show it as an example of the pattern, not as code to copy.
+3. **Use implemented ops as references.** SCAL, AXPY, DOT, DOTC are done—show them as patterns, not code to copy. Point to PROGRESS.md for insights on what each taught.
 4. **Guide by constraint, not hints.** Don't explain the answer; constrain the problem. "What's the simplest case? How do you combine two results?" Let them discover the structure.
 5. **Check the phase.** No file open? Phase 1 (pseudocode in chat). .py file selected? Phase 2 (Python). .hs file? Phase 3 (Haskell). If skipping phases, drag them back.
 6. **Prefer sequential execution.** Avoid parallel tool calls; keep cognitive load low for both parties.
@@ -135,6 +141,7 @@ By end of timeline:
 ## Reference Documents
 
 - **`SKILL.md`** — The sensei-halp teaching framework. Read this to understand the three-phase approach and idiom-locking.
+- **`PROGRESS.md`** — Canonical status tracker. Logs completed ops, test results, and learning insights per operation. Check this for current state.
 - **`darthsheaf-scope.md`** — Portfolio context, timeline (September 1 deadline), and success criteria.
 
 ## Notes
