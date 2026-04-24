@@ -1,4 +1,4 @@
-{-|
+{- |
 Module      : DarthSheaf.BlasL1
 Description : BLAS Level 1 operations (vector-vector) in pure Haskell
 Copyright   : (c) 2026
@@ -17,34 +17,43 @@ Design principles:
   3. Immutability — leverage Haskell's purity for correctness reasoning
   4. Document hazards — reductions need stability analysis
 -}
-
-module DarthSheaf.BlasL1
-    (
+module DarthSheaf.BlasL1 (
     -- * Types
-      Vector
+    Vector,
+
     -- * SCAL: Vector scaling
-    , scal
+    scal,
+
     -- * AXPY: Scaled add
-    , axpy
+    axpy,
+
     -- * DOT: Dot product
-    , dot
+    dot,
+
     -- * DOTC: Conjugate dot product
-    , dotc
+    dotc,
+
     -- * NRML2: 2-norm (Euclidean)
-    , nrml2
+    nrml2,
+
     -- * ASUM: Sum of absolute values
-    , asum
+    asum,
+
     -- * IAMAX: Index of max absolute value
-    , iamax
+    iamax,
+
     -- * COPY: Copy vector
-    , copy
+    copy,
+
     -- * SWAP: Swap two vectors
-    , swap
+    swap,
+
     -- * ROT: Givens rotation
-    , rot
+    rot,
+
     -- * ROTMG: Generate Givens parameters
-    , rotmg
-    ) where
+    rotmg,
+) where
 
 -- | Dense vector: list of doubles
 type Vector = [Double]
@@ -53,7 +62,7 @@ type Vector = [Double]
 -- SCAL: y := alpha * x
 -- ============================================================================
 
-{-|
+{- |
 Scale a vector by a scalar constant.
 
     scal alpha x = [alpha * x_0, alpha * x_1, ..., alpha * x_n]
@@ -62,15 +71,15 @@ Numerical hazard: None (single multiplication per element).
 Learning focus: Loop structure, indexing, performance baseline.
 -}
 scal :: Double -> Vector -> Vector
-scal c [] = []
+scal _ [] = []
 -- scal c [a] = c*[a]
-scal c (x:xs) = c*x: scal c xs
+scal c (x : xs) = c * x : scal c xs
 
 -- ============================================================================
 -- AXPY: y := alpha * x + y
 -- ============================================================================
 
-{-|
+{- |
 Add a scaled vector to another vector (element-wise).
 
     axpy alpha x y = [alpha*x_0 + y_0, alpha*x_1 + y_1, ..., alpha*x_n + y_n]
@@ -85,13 +94,14 @@ Learning focus: Memory access patterns, vectorization hints, loop unrolling.
 -}
 axpy :: Double -> Vector -> Vector -> Vector
 axpy _ [] [] = []
-axpy c (x:xs) (y:ys) = c*x + y : axpy c xs ys
+axpy c (x : xs) (y : ys) = c * x + y : axpy c xs ys
 axpy _ _ _ = []
+
 -- ============================================================================
 -- DOT: Inner product (dot product)
 -- ============================================================================
 
-{-|
+{- |
 Compute the inner product of two vectors.
 
     dot x y = x_0*y_0 + x_1*y_1 + ... + x_n*y_n
@@ -115,7 +125,7 @@ dot x y = sum (zipWith (*) x y)
 -- DOTC: Conjugate dot product
 -- ============================================================================
 
-{-|
+{- |
 Compute the inner product with conjugation (for complex numbers).
 
 In the real case, this is identical to 'dot'. Included for API compatibility
@@ -131,13 +141,13 @@ Numerical hazard: Same as 'dot'.
 Learning focus: Understanding why complex variants exist and why they matter.
 -}
 dotc :: Vector -> Vector -> Double
-dotc = undefined
+dotc = dot
 
 -- ============================================================================
 -- NRML2: Euclidean norm (2-norm)
 -- ============================================================================
 
-{-|
+{- |
 Compute the Euclidean (2) norm of a vector.
 
     nrml2 x = sqrt(sum(x_i^2))
@@ -160,7 +170,7 @@ nrml2 = undefined
 -- ASUM: Sum of absolute values
 -- ============================================================================
 
-{-|
+{- |
 Compute the sum of absolute values.
 
     asum x = |x_0| + |x_1| + ... + |x_n|
@@ -173,13 +183,13 @@ Learning focus: Conditional logic (sign handling), alternative to NRML2,
 simpler accumulation strategy.
 -}
 asum :: Vector -> Double
-asum = undefined
+asum = foldr (+) []
 
 -- ============================================================================
 -- IAMAX: Index of maximum absolute value
 -- ============================================================================
 
-{-|
+{- |
 Find the index of the element with the largest absolute value.
 
     iamax x = argmax_i |x_i|
@@ -198,7 +208,7 @@ iamax = undefined
 -- COPY: Copy vector
 -- ============================================================================
 
-{-|
+{- |
 Copy a vector (element-wise copy).
 
 In imperative BLAS, this modifies the destination in-place. In pure Haskell,
@@ -218,7 +228,7 @@ copy = undefined
 -- SWAP: Swap two vectors (exchange elements)
 -- ============================================================================
 
-{-|
+{- |
 Swap two vectors (in BLAS, done in-place; here, we return both).
 
 In imperative BLAS, this exchanges x_i <-> y_i for all i. In pure Haskell,
@@ -241,7 +251,7 @@ swap = undefined
 -- ROT: Givens rotation
 -- ============================================================================
 
-{-|
+{- |
 Apply a Givens rotation to two vectors (in-place in BLAS; returns new pair here).
 
 A Givens rotation is a 2x2 orthogonal matrix used in QR decomposition and
@@ -271,7 +281,7 @@ rot = undefined
 -- ROTMG: Generate Givens rotation parameters (robust)
 -- ============================================================================
 
-{-|
+{- |
 Generate Givens rotation parameters safely, avoiding overflow/underflow.
 
 Given four doubles (a, b, c, d), compute (d, c, s, r) such that:
