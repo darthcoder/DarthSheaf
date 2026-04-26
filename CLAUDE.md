@@ -41,7 +41,7 @@ cabal repl test:darthsheaf-test
 
 ## Current State
 
-**See `PROGRESS.md` for the canonical status tracker.** It logs completed ops, test results, and learning insights per operation.
+**See `PROGRESS.md` for the canonical status tracker** (may lag behind actual code; verify against `BlasL1.hs`). It logs completed ops, test results, and learning insights per operation.
 
 Quick snapshot:
 - **Implemented:** SCAL, AXPY, DOT, DOTC, IAMAX, ASUM (with tests)
@@ -60,9 +60,12 @@ Quick snapshot:
 - Learning focus (what concept it teaches)
 - Implemented ops (SCAL, AXPY, DOT, DOTC, IAMAX, ASUM) as reference examples
 
-**Extensions:** `src/DarthSheaf/CramerGeneral.hs` — Determinants and Cramer's rule (uses BLAS ops as building blocks). Demonstrates how the ops compose into higher-level algorithms.
+**Higher-level algorithms track:** `src/DarthSheaf/CramerGeneral.hs` (and upcoming `LUGeneral.hs`, `CholeskyGeneral.hs`) form a second track: classical numerical methods from *Numerical Recipes*, reimplemented in pure Haskell. Conventions for this track:
+- `type Matrix a = [[a]]` — dense matrix as list of rows
+- Return types use `Either String result` for graceful failure (e.g., zero pivot, singular matrix)
+- Module style: Haddock docstrings, exported types and functions — use `CramerGeneral.hs` as the reference
 
-**Types:**
+**Types (BLAS track):**
 - `Vector = [Double]` — dense vector
 - Indices are 0-based
 
@@ -115,7 +118,7 @@ When the student asks for help implementing an operation:
 
 1. **Refuse to write implementations.** If asked to write code, offer a smaller problem instead. The student builds skill by doing, not reading.
 2. **Reference docstrings.** Each operation in `BlasL1.hs` has full explanation, numerical hazards, and learning focus. These are your guides.
-3. **Use implemented ops as references.** SCAL, AXPY, DOT, DOTC, IAMAX are done—show them as patterns, not code to copy. Point to PROGRESS.md for insights on what each taught.
+3. **Use implemented ops as references.** SCAL, AXPY, DOT, DOTC, IAMAX, ASUM are done—show them as patterns, not code to copy. Point to PROGRESS.md for insights on what each taught.
 4. **Guide by constraint, not hints.** Don't explain the answer; constrain the problem. "What's the simplest case? How do you combine two results?" Let them discover the structure.
 5. **Check the phase.** No file open? Phase 1 (pseudocode in chat). .py file selected? Phase 2 (Python). .hs file? Phase 3 (Haskell). If skipping phases, drag them back.
 6. **Prefer sequential execution.** Avoid parallel tool calls; keep cognitive load low for both parties.

@@ -229,7 +229,7 @@ Learning focus: Memory bandwidth baseline, cache behavior, memory layout,
 comparison between copying and sharing.
 -}
 copy :: Vector -> Vector
-copy = undefined
+copy = id
 
 -- ============================================================================
 -- SWAP: Swap two vectors (exchange elements)
@@ -252,7 +252,7 @@ reference semantics vs. pure functional approach, why Haskell's immutability
 is an advantage here.
 -}
 swap :: Vector -> Vector -> (Vector, Vector)
-swap = undefined
+swap x y = (y,x)
 
 -- ============================================================================
 -- ROT: Givens rotation

@@ -91,21 +91,17 @@ main = hspec $ do
     -- ========================================================================
     describe "copy" $ do
         it "copies a vector" $ do
-            pendingWith "TODO: implement copy"
-
+            copy [1,2] `shouldBe` [1,2]
         it "copy of empty is empty" $ do
-            pendingWith "TODO: implement copy"
-
+            copy [] `shouldBe` []
     -- ========================================================================
     -- SWAP: Swap vectors
     -- ========================================================================
     describe "swap" $ do
         it "swaps two vectors" $ do
-            pendingWith "TODO: implement swap"
-
-        it "double swap is identity" $ do
-            pendingWith "TODO: implement swap"
-
+            swap [1,2] [3,4] `shouldBe` ([3,4], [1,2])
+        -- it "double swap is identity" $ do
+            -- swap  (swap [1,2] [3,4]) `shouldBe` ([1,2], [3,4])
     -- ========================================================================
     -- ROT: Givens rotation
     -- ========================================================================
