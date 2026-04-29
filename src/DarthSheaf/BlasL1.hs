@@ -168,6 +168,25 @@ safe reduction algorithms.
 -}
 nrml2 :: Vector -> Double
 nrml2 = undefined
+-- nrml2 [x] = abs x
+-- nrml2 (x:xs) = amax (xs) * norm xs
+-- nrml2 [] = 0
+-- nrml (x:xs) =  ) * sqrt (asum (x:xs)/maxi
+-- where maxi = (if x > max xs then x else max xs
+-- -- nrml2(x) = max(|x_i|) * sqrt(sum((x_i / max(|x_i|))^2))
+-- norm  :: Vector -> Double
+-- norm [x] = abs x
+-- norm (x:xs) = sqrt ((x + (norm xs)/ amax (xs))^2)
+
+
+-- amax :: Vector -> Double
+-- amax [] = 0
+-- amax [_] = abs _
+-- amax (x:xs) =
+--     case amax xs of
+--         [] -> 0
+--         x:y:xs  -> if (abs x  > y) then x else amax xs
+
 
 -- ============================================================================
 -- ASUM: Sum of absolute values
@@ -282,7 +301,9 @@ Learning focus: Parametric transformations, trigonometry in code, coupled update
 orthogonal matrix application, QR/Householder algorithms.
 -}
 rot :: Double -> Double -> Vector -> Vector -> (Vector, Vector)
-rot = undefined
+-- rot c s x y = ((scal c x + scal s y),(-scal s x + scal c y))
+rot c s x y = (axpy 1 (scal c x) (scal s y), (axpy (-1) (scal s x) (scal c y)))
+
 
 -- ============================================================================
 -- ROTMG: Generate Givens rotation parameters (robust)

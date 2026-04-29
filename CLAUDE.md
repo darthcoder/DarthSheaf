@@ -44,8 +44,10 @@ cabal repl test:darthsheaf-test
 **See `PROGRESS.md` for the canonical status tracker** (may lag behind actual code; verify against `BlasL1.hs`). It logs completed ops, test results, and learning insights per operation.
 
 Quick snapshot:
-- **Implemented:** SCAL, AXPY, DOT, DOTC, IAMAX, ASUM (with tests)
-- **Pending:** NRML2, COPY, SWAP, ROT, ROTMG (stubs with docstrings)
+- **Implemented:** SCAL, AXPY, DOT, DOTC, IAMAX, ASUM, COPY, SWAP, ROT (with tests)
+- **Pending:** NRML2, ROTMG (`= undefined` stubs)
+
+Note: PROGRESS.md lags significantly behind the code — trust `BlasL1.hs` over PROGRESS.md for actual status.
 - `test/Main.hs` — Tests written for implemented ops; stubs for pending
 - `bench/Main.hs` — Benchmark structure ready to fill in
 - `tries.hs` — Scratchpad for learning patterns (in .gitignore)
@@ -80,9 +82,9 @@ Quick snapshot:
 | ✓ | **IAMAX** | `iamax :: Vector -> Maybe Int` | Index of max absolute value | Search operations, index tracking |
 | ✓ | **ASUM** | `asum :: Vector -> Double` | Sum of absolute values: `Σ\|x_i\|` | Simpler accumulation |
 | ⋯ | **NRML2** | `nrml2 :: Vector -> Double` | 2-norm: `sqrt(Σ x_i²)` | Overflow/underflow handling |
-| ⋯ | **COPY** | `copy :: Vector -> Vector` | Copy vector | Memory bandwidth baseline |
-| ⋯ | **SWAP** | `swap :: Vector -> Vector -> (Vector, Vector)` | Swap two vectors in-place (Haskell: returns pair) | Memory aliasing, immutability |
-| ⋯ | **ROT** | `rot :: Double -> Double -> Vector -> Vector -> (Vector, Vector)` | Givens rotation | Parametric transformations |
+| ✓ | **COPY** | `copy :: Vector -> Vector` | Copy vector | Memory bandwidth baseline |
+| ✓ | **SWAP** | `swap :: Vector -> Vector -> (Vector, Vector)` | Swap two vectors in-place (Haskell: returns pair) | Memory aliasing, immutability |
+| ✓ | **ROT** | `rot :: Double -> Double -> Vector -> Vector -> (Vector, Vector)` | Givens rotation | Parametric transformations |
 | ⋯ | **ROTMG** | `rotmg :: Double -> Double -> Double -> Double -> (Double, Double, Double, Double)` | Generate Givens parameters | Numerical robustness edge cases |
 
 ---
