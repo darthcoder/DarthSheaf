@@ -166,26 +166,17 @@ Current implementation does NOT include scaling. For production use, add it.
 Learning focus: Overflow/underflow handling, normalization, dynamic range,
 safe reduction algorithms.
 -}
+
 nrml2 :: Vector -> Double
-nrml2 = undefined
--- nrml2 [x] = abs x
--- nrml2 (x:xs) = amax (xs) * norm xs
--- nrml2 [] = 0
--- nrml (x:xs) =  ) * sqrt (asum (x:xs)/maxi
--- where maxi = (if x > max xs then x else max xs
--- -- nrml2(x) = max(|x_i|) * sqrt(sum((x_i / max(|x_i|))^2))
--- norm  :: Vector -> Double
--- norm [x] = abs x
--- norm (x:xs) = sqrt ((x + (norm xs)/ amax (xs))^2)
+nrml2 [] = 0
+nrml2 x =
+    if m == 0 then 0
+    else
+        (m) * sqrt (dot scal_x scal_x)
+    where
+        scal_x = scal (1/ (m)) x
+        m = maximum (map abs x)
 
-
--- amax :: Vector -> Double
--- amax [] = 0
--- amax [_] = abs _
--- amax (x:xs) =
---     case amax xs of
---         [] -> 0
---         x:y:xs  -> if (abs x  > y) then x else amax xs
 
 
 -- ============================================================================
