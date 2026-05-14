@@ -326,3 +326,11 @@ understanding why BLAS kernels are complex (they're solving real problems).
 -}
 rotmg :: Double -> Double -> Double -> Double -> (Double, Double, Double, Double)
 rotmg = undefined
+--  rotmg a b c d = (d, c, s, r)
+--     where
+--         r = nrml2 [a, b]
+--             if (r == 0)
+--             then (d,1,0,0)
+--             else
+--                 c = a/r
+--                 s = b/r

@@ -56,14 +56,12 @@ main = hspec $ do
     -- ========================================================================
     describe "nrml2" $ do
         it "computes norm of [3, 4]" $ do
-            pendingWith "TODO: implement nrml2"
+            nrml2 [3,4] `shouldBe` 5.0
 
         it "norm of zero vector is zero" $ do
-            pendingWith "TODO: implement nrml2"
-
+            nrml2 [0,0] `shouldBe` 0
         it "norm is always non-negative" $ do
-            pendingWith "TODO: implement nrml2"
-
+            nrml2 [-1, 0] `shouldBe` 1
     -- ========================================================================
     -- ASUM: Sum of absolute values
     -- ========================================================================
@@ -100,17 +98,17 @@ main = hspec $ do
     describe "swap" $ do
         it "swaps two vectors" $ do
             swap [1,2] [3,4] `shouldBe` ([3,4], [1,2])
-        -- it "double swap is identity" $ do
-            -- swap  (swap [1,2] [3,4]) `shouldBe` ([1,2], [3,4])
+        it "double swap is identity" $ do
+            uncurry swap (swap [1,2] [3,4]) `shouldBe` ([1,2], [3,4])
     -- ========================================================================
     -- ROT: Givens rotation
     -- ========================================================================
     describe "rot" $ do
         it "identity rotation (c=1, s=0) leaves vectors unchanged" $ do
-            pendingWith "TODO: implement rot"
+            rot 1 0 [1,2] [3,4] `shouldBe` ([1,2], [3,4])
 
         it "90-degree rotation (c=0, s=1) swaps and negates" $ do
-            pendingWith "TODO: implement rot"
+            rot 0 1 [1,2] [3,4] `shouldBe` ([3,4], [-1,-2])
 
     -- ========================================================================
     -- ROTMG: Generate Givens rotation

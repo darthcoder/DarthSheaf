@@ -1,0 +1,127 @@
+Build profile: -w ghc-9.14.1 -O1
+In order, the following will be built (use -v for more details):
+ - DarthSheaf-0.1.0.0 (bench:dartsheaf-bench) (first run)
+Preprocessing benchmark 'dartsheaf-bench' for DarthSheaf-0.1.0.0...
+Building benchmark 'dartsheaf-bench' for DarthSheaf-0.1.0.0...
+Running 1 benchmarks...
+Benchmark dartsheaf-bench: RUNNING...
+benchmarking SCAL/small (10)
+time                 123.3 ns   (123.1 ns .. 123.5 ns)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 122.9 ns   (122.7 ns .. 123.2 ns)
+std dev              809.5 ps   (586.3 ps .. 1.209 ns)
+
+benchmarking SCAL/medium (100)
+time                 1.094 μs   (1.091 μs .. 1.100 μs)
+                     1.000 R²   (0.999 R² .. 1.000 R²)
+mean                 1.098 μs   (1.094 μs .. 1.105 μs)
+std dev              17.59 ns   (10.25 ns .. 30.92 ns)
+variance introduced by outliers: 16% (moderately inflated)
+
+benchmarking SCAL/large (1000)
+time                 11.30 μs   (11.13 μs .. 11.57 μs)
+                     0.999 R²   (0.997 R² .. 1.000 R²)
+mean                 11.23 μs   (11.18 μs .. 11.32 μs)
+std dev              214.0 ns   (125.0 ns .. 383.8 ns)
+variance introduced by outliers: 18% (moderately inflated)
+
+benchmarking AXPY/small (10)
+time                 159.6 ns   (156.9 ns .. 163.3 ns)
+                     0.998 R²   (0.997 R² .. 1.000 R²)
+mean                 158.5 ns   (157.3 ns .. 160.4 ns)
+std dev              4.902 ns   (3.302 ns .. 7.009 ns)
+variance introduced by outliers: 47% (moderately inflated)
+
+benchmarking AXPY/medium (100)
+time                 1.462 μs   (1.457 μs .. 1.466 μs)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 1.465 μs   (1.461 μs .. 1.468 μs)
+std dev              12.35 ns   (10.06 ns .. 16.86 ns)
+
+benchmarking AXPY/large (1000)
+time                 14.89 μs   (14.76 μs .. 15.04 μs)
+                     1.000 R²   (0.999 R² .. 1.000 R²)
+mean                 14.82 μs   (14.77 μs .. 14.89 μs)
+std dev              205.7 ns   (148.3 ns .. 330.8 ns)
+
+benchmarking DOT/small (10)
+time                 49.69 ns   (49.68 ns .. 49.71 ns)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 49.72 ns   (49.69 ns .. 49.75 ns)
+std dev              110.6 ps   (84.72 ps .. 139.8 ps)
+
+benchmarking DOT/medium (100)
+time                 661.7 ns   (648.1 ns .. 680.3 ns)
+                     0.993 R²   (0.990 R² .. 0.996 R²)
+mean                 686.3 ns   (669.6 ns .. 709.4 ns)
+std dev              68.11 ns   (58.68 ns .. 74.99 ns)
+variance introduced by outliers: 89% (severely inflated)
+
+benchmarking DOT/large (1000)
+time                 10.12 μs   (9.896 μs .. 10.43 μs)
+                     0.995 R²   (0.991 R² .. 0.999 R²)
+mean                 10.20 μs   (10.03 μs .. 10.46 μs)
+std dev              725.0 ns   (527.6 ns .. 926.2 ns)
+variance introduced by outliers: 76% (severely inflated)
+
+benchmarking NRML2/small (10)
+time                 329.5 ns   (328.0 ns .. 331.0 ns)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 329.7 ns   (329.0 ns .. 330.6 ns)
+std dev              2.709 ns   (2.317 ns .. 3.357 ns)
+
+benchmarking NRML2/medium (100)
+time                 2.968 μs   (2.959 μs .. 2.979 μs)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 2.970 μs   (2.959 μs .. 2.980 μs)
+std dev              36.80 ns   (29.62 ns .. 46.73 ns)
+
+benchmarking NRML2/large (1000)
+time                 32.70 μs   (32.45 μs .. 33.01 μs)
+                     0.999 R²   (0.999 R² .. 1.000 R²)
+mean                 32.78 μs   (32.60 μs .. 33.03 μs)
+std dev              702.3 ns   (517.0 ns .. 994.4 ns)
+variance introduced by outliers: 19% (moderately inflated)
+
+benchmarking ASUM/small (10)
+time                 34.95 ns   (34.88 ns .. 35.05 ns)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 34.98 ns   (34.93 ns .. 35.04 ns)
+std dev              172.9 ps   (132.4 ps .. 278.3 ps)
+
+benchmarking ASUM/medium (100)
+time                 443.4 ns   (436.6 ns .. 448.7 ns)
+                     0.998 R²   (0.997 R² .. 0.999 R²)
+mean                 433.2 ns   (428.5 ns .. 441.9 ns)
+std dev              20.49 ns   (13.61 ns .. 32.51 ns)
+variance introduced by outliers: 65% (severely inflated)
+
+benchmarking ASUM/large (1000)
+time                 5.466 μs   (5.391 μs .. 5.544 μs)
+                     0.999 R²   (0.999 R² .. 0.999 R²)
+mean                 5.484 μs   (5.436 μs .. 5.525 μs)
+std dev              149.6 ns   (126.5 ns .. 170.6 ns)
+variance introduced by outliers: 32% (moderately inflated)
+
+benchmarking IAMAX/small (10)
+time                 157.2 ns   (156.3 ns .. 158.6 ns)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 158.7 ns   (157.9 ns .. 159.5 ns)
+std dev              2.651 ns   (2.136 ns .. 3.349 ns)
+variance introduced by outliers: 20% (moderately inflated)
+
+benchmarking IAMAX/medium (100)
+time                 10.81 μs   (10.78 μs .. 10.85 μs)
+                     1.000 R²   (1.000 R² .. 1.000 R²)
+mean                 10.92 μs   (10.87 μs .. 10.99 μs)
+std dev              192.4 ns   (135.8 ns .. 262.4 ns)
+variance introduced by outliers: 16% (moderately inflated)
+
+benchmarking IAMAX/large (1000)
+time                 1.005 ms   (991.4 μs .. 1.026 ms)
+                     0.997 R²   (0.995 R² .. 0.998 R²)
+mean                 1.022 ms   (1.008 ms .. 1.036 ms)
+std dev              44.88 μs   (39.56 μs .. 53.57 μs)
+variance introduced by outliers: 33% (moderately inflated)
+
+Benchmark dartsheaf-bench: FINISH
