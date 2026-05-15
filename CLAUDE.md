@@ -34,38 +34,30 @@ cabal test --test-show-details=streaming
 
 To explore tests interactively:
 ```bash
-cabal repl test:darthsheaf-test
+cabal repl test:dartsheaf-test
 ```
+
+Note: the cabal targets are `dartsheaf-test` and `dartsheaf-bench` (typo in `DarthSheaf.cabal` — "dartsheaf" not "darthsheaf"). Use those names with `cabal repl`, `cabal bench dartsheaf-bench`, etc.
 
 ---
 
-## Current State
-
-**See `PROGRESS.md` for the canonical status tracker** (may lag behind actual code; verify against `BlasL1.hs`). It logs completed ops, test results, and learning insights per operation.
-
-Quick snapshot:
-- **Implemented:** SCAL, AXPY, DOT, DOTC, IAMAX, ASUM, COPY, SWAP, ROT (with tests)
-- **Pending:** NRML2, ROTMG (`= undefined` stubs)
-
-Note: PROGRESS.md lags significantly behind the code — trust `BlasL1.hs` over PROGRESS.md for actual status.
-- `test/Main.hs` — Tests written for implemented ops; stubs for pending
-- `bench/Main.hs` — Benchmark structure ready to fill in
-- `tries.hs` — Scratchpad for learning patterns (in .gitignore)
-
 ## Architecture
 
-**Public API:** `src/DarthSheaf.hs` re-exports all operations.
+**Public API:** `src/DarthSheaf.hs` re-exports all of `DarthSheaf.BlasL1`. The cabal `exposed-modules` are only `DarthSheaf` and `DarthSheaf.BlasL1` — `CramerGeneral` builds but is not exported.
 
 **Core operations:** `src/DarthSheaf/BlasL1.hs` — All 10 BLAS Level 1 ops, each with:
 - Full type signature
 - Comprehensive docstring explaining purpose and numerical hazards
 - Learning focus (what concept it teaches)
-- Implemented ops (SCAL, AXPY, DOT, DOTC, IAMAX, ASUM) as reference examples
 
-**Higher-level algorithms track:** `src/DarthSheaf/CramerGeneral.hs` (and upcoming `LUGeneral.hs`, `CholeskyGeneral.hs`) form a second track: classical numerical methods from *Numerical Recipes*, reimplemented in pure Haskell. Conventions for this track:
-- `type Matrix a = [[a]]` — dense matrix as list of rows
-- Return types use `Either String result` for graceful failure (e.g., zero pivot, singular matrix)
-- Module style: Haddock docstrings, exported types and functions — use `CramerGeneral.hs` as the reference
+**Higher-level algorithms track (currently unexported):** `src/DarthSheaf/CramerGeneral.hs` is a second track for classical numerical methods from *Numerical Recipes*, reimplemented in pure Haskell. Planned siblings (`LUGeneral.hs`, `CholeskyGeneral.hs`) do not exist yet. Conventions for this track:
+- `type Matrix = [[Double]]` — dense matrix as list of rows
+- Errors raised via `error` (current `CramerGeneral`); future modules may shift to `Either String result` for graceful failure
+- Module style: exported types and functions, short comments — `CramerGeneral.hs` is the reference
+
+**Scratchpads (not part of the build):**
+- `src/cramerMemoized.lhs` — literate-Haskell scratch exploring memoized Cramer
+- `src/DarthSheaf/tries.hs` — learning-pattern scratchpad (in `.gitignore`)
 
 **Types (BLAS track):**
 - `Vector = [Double]` — dense vector
