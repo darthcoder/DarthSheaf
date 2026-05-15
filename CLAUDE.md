@@ -73,11 +73,23 @@ Note: the cabal targets are `dartsheaf-test` and `dartsheaf-bench` (typo in `Dar
 | ✓ | **DOTC** | `dotc :: Vector -> Vector -> Double` | Dot product (conjugate, for C) | Stability with complex numbers |
 | ✓ | **IAMAX** | `iamax :: Vector -> Maybe Int` | Index of max absolute value | Search operations, index tracking |
 | ✓ | **ASUM** | `asum :: Vector -> Double` | Sum of absolute values: `Σ\|x_i\|` | Simpler accumulation |
-| ⋯ | **NRML2** | `nrml2 :: Vector -> Double` | 2-norm: `sqrt(Σ x_i²)` | Overflow/underflow handling |
+| ✓ | **NRML2** | `nrml2 :: Vector -> Double` | 2-norm: `sqrt(Σ x_i²)` | Overflow/underflow handling (uses max-element scaling) |
 | ✓ | **COPY** | `copy :: Vector -> Vector` | Copy vector | Memory bandwidth baseline |
 | ✓ | **SWAP** | `swap :: Vector -> Vector -> (Vector, Vector)` | Swap two vectors in-place (Haskell: returns pair) | Memory aliasing, immutability |
 | ✓ | **ROT** | `rot :: Double -> Double -> Vector -> Vector -> (Vector, Vector)` | Givens rotation | Parametric transformations |
-| ⋯ | **ROTMG** | `rotmg :: Double -> Double -> Double -> Double -> (Double, Double, Double, Double)` | Generate Givens parameters | Numerical robustness edge cases |
+| ⚠ | **ROTMG** | `rotmg :: Double -> Double -> Double -> Double -> (Double, Double, Double, Double)` | Generate Givens parameters | Numerical robustness edge cases |
+
+⚠ **ROTMG status:** implementation exists in `BlasL1.hs` (basic case + zero-vector guard; ignores its `c` input parameter), but all three ROTMG cases in `test/Main.hs` are still `pendingWith "TODO: implement rotmg"` — the implementation is **unverified by tests**.
+
+---
+
+## Current State
+
+**See `PROGRESS.md` for prose insights per operation, but trust `BlasL1.hs` over PROGRESS.md for actual status — PROGRESS.md lags significantly.**
+
+- `src/DarthSheaf/BlasL1.hs` — all 10 ops implemented (see ROTMG caveat above)
+- `test/Main.hs` — hspec tests for all implemented ops; ROTMG cases are pending stubs
+- `bench/Main.hs` — criterion benchmarks for SCAL, AXPY, DOT, NRML2, ASUM, IAMAX at sizes 10 / 100 / 1000 (COPY, SWAP, ROT, ROTMG not yet benchmarked)
 
 ---
 
@@ -108,15 +120,13 @@ Compare against:
 
 ## How to Work With This Project
 
-When the student asks for help implementing an operation:
+The teaching constraints at the top of this file (no code generation, three-phase progression, recursion-only idiom lock) are the load-bearing rules. Additional points specific to BLAS-op help:
 
-1. **Refuse to write implementations.** If asked to write code, offer a smaller problem instead. The student builds skill by doing, not reading.
-2. **Reference docstrings.** Each operation in `BlasL1.hs` has full explanation, numerical hazards, and learning focus. These are your guides.
-3. **Use implemented ops as references.** SCAL, AXPY, DOT, DOTC, IAMAX, ASUM are done—show them as patterns, not code to copy. Point to PROGRESS.md for insights on what each taught.
-4. **Guide by constraint, not hints.** Don't explain the answer; constrain the problem. "What's the simplest case? How do you combine two results?" Let them discover the structure.
-5. **Check the phase.** No file open? Phase 1 (pseudocode in chat). .py file selected? Phase 2 (Python). .hs file? Phase 3 (Haskell). If skipping phases, drag them back.
-6. **Prefer sequential execution.** Avoid parallel tool calls; keep cognitive load low for both parties.
-7. **Tests first, then code.** Student writes test assertions, then implementation. Use tests to reveal what's missing.
+1. **Reference docstrings, not your own re-explanation.** Each op in `BlasL1.hs` has full explanation, numerical hazards, and learning focus. Point at those.
+2. **Use implemented ops as patterns, not code to copy.** Show them as structure cues when the student is stuck.
+3. **Phase detection.** No file open → Phase 1 (pseudocode in chat). `.py` file selected → Phase 2 (Python). `.hs` file → Phase 3 (Haskell). If skipping phases, drag back.
+4. **Prefer sequential execution.** Avoid parallel tool calls; keep cognitive load low for both parties.
+5. **Tests first, then code.** Student writes assertions, then implementation. Use tests to reveal what's missing.
 
 ## Design Principles
 
@@ -144,12 +154,12 @@ By end of timeline:
 ## Reference Documents
 
 - **`SKILL.md`** — The sensei-halp teaching framework. Read this to understand the three-phase approach and idiom-locking.
-- **`PROGRESS.md`** — Canonical status tracker. Logs completed ops, test results, and learning insights per operation. Check this for current state.
+- **`PROGRESS.md`** — Prose log of completed ops and learning insights. Lags the actual code; verify status against `BlasL1.hs`.
 - **`darthsheaf-scope.md`** — Portfolio context, timeline (September 1 deadline), and success criteria.
 
 ## Notes
 
 - `Vector` is currently `[Double]` for simplicity; future: migrate to `Data.Vector.Unboxed` for performance
 - Reduction operations (DOT, NRML2) warrant extra care for numerical stability
-- ROTMG is the most complex; implement last
+- ROTMG is the most numerically delicate op — the current implementation is a simplified first pass; LAPACK-style robust scaling logic is the next step. ROTMG tests are still pending stubs.
 - Each operation should have 3–5 test cases minimum
